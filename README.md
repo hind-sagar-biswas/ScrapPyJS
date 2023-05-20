@@ -47,7 +47,7 @@ This method terminates the web browser instance if it exists.
 1. Import the Scrappy:
 
     ```python
-    from scrappy import ScrapPy
+    from ScrapPy import ScrapPy
     ```
 
 2. Create an instance of the Scrappy class:
