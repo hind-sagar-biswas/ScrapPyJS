@@ -68,7 +68,7 @@ class ScrapPyJS():
         """
         self.js = script
 
-    def save(self, data):
+    def save_to_file(self, data):
         if not isinstance(data, str):
             # Convert non-string data to JSON string
             data = json.dumps(data)
@@ -77,8 +77,17 @@ class ScrapPyJS():
         filename = self.save_file.replace("$t", current_time)
         file_path = f"{self.save_file_location}/{filename}.{self.save_file_format}"
 
-        with open(file_path, 'w', encoding='utf-8') as outfile:
-            outfile.write(data)
+        return_val = True
+
+        try:
+            with open(file_path, 'w', encoding='utf-8') as outfile:
+                outfile.write(data)
+        except Exception:
+            logging.error("Failed to write to File")
+            logging.info("Returning data instead")
+            return_val = data
+
+        return return_val
 
     def scrap(self, url, wait=False, wait_for=None, wait_target=None, wait_time=10):
         """
@@ -116,17 +125,17 @@ class ScrapPyJS():
                     wait_for = By.XPATH
                 case _:
                     wait = False
-        
+
         self.browser.get(url)
 
         if wait:
             wait = WebDriverWait(self.browser, wait_time)
             wait.until(EC.presence_of_element_located((wait_for, wait_target)))
-            
-        try: result = self.browser.execute_script(self.js)
-        except: result = False
 
-        return result
+        try: result = self.browser.execute_script(self.js)
+        except Exception: result = False
+
+        return self.save_to_file(result) if self.save else result
     
     def loop_through(self, url_list, wait=False, wait_for=None, wait_target=None, wait_time=10):
         """
@@ -146,7 +155,7 @@ class ScrapPyJS():
         for url in url_list:
             result = self.scrap(self, url, wait, wait_for, wait_target, wait_time)
             results.append(result)
-        return results
+        return self.save_to_file(results) if self.save else results
 
     def end(self):
         # Terminates the web browser instance if it exists.
