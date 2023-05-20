@@ -101,6 +101,16 @@ class ScrapPyJS():
         return result
     
     def loop_through(self, url_list, wait=False, wait_for=None, wait_target=None, wait_time=10):
+        """
+        Performs web scraping on the specified URL list.
+
+        Parameters:
+        - url (list): The URL lists to scrape.
+        - rest are same as scrape
+
+        Returns:
+        - result: A list of the results of executing the JavaScript code on the URLs.
+        """
         if not isinstance(url_list, list):
             logging.error("Expected url_list = list() for ScrapPyJS.loop_through()")
             return False
