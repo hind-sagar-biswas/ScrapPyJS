@@ -24,7 +24,7 @@ class ScrapPyJS():
         self.browser = browser
 
         self.save = False
-        self.save_file = "result-$url-$t"
+        self.save_file = "scrape-result-$t"
         self.save_file_format = "txt"
         self.save_file_location = "./"
 
@@ -51,7 +51,7 @@ class ScrapPyJS():
     def toggle_save_mode(self):
         self.save = not self.save
 
-    def set_save_info(self, save=False, file_name="result-$url-$t", file_format="txt", location="./"):
+    def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="txt", location="./"):
         self.save = save
         self.save_file = file_name
         self.save_file_format = file_format
