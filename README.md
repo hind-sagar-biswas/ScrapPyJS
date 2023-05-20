@@ -44,6 +44,18 @@ This method performs web scraping on the specified URL.
 
 Returns the result of executing the JavaScript code on the web page.
 
+`ScrapPyJS.scrap(url_list, wait=False, wait_for=None, wait_target=None, wait_time=10)`
+
+This method performs web scraping on all URL list.
+
+- `url_list`: The URL targets to scrape.
+- `wait` (optional): Boolean value indicating whether to wait for an element to be present on the page before scraping. Default is `False`.
+- `wait_for` (optional): The method to use for locating the element to wait for. Possible values are `'class'`, `'id'`, `'name'`, `'tag'`, `'link'`, `'part_link'`, `'css'`, or `'xp'`. Default is `None`.
+- `wait_target` (optional): The target value to locate the element to wait for. Default is `None`.
+- `wait_time` (optional): The maximum time (in seconds) to wait for the element to be present. Default is `10`.
+
+Returns the result of executing the JavaScript code on all the urls as a list.
+
 `ScrapPyJS.end()`
 
 This method terminates the web browser instance if it exists.
