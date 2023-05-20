@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+ScrapPyJS/__init__.py
+ScrapPyJS/scrappy.py
+ScrapPyJS.egg-info/PKG-INFO
+ScrapPyJS.egg-info/SOURCES.txt
+ScrapPyJS.egg-info/dependency_links.txt
+ScrapPyJS.egg-info/requires.txt
+ScrapPyJS.egg-info/top_level.txt

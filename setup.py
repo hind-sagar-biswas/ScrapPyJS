@@ -22,6 +22,9 @@ setup(
     long_description=long_description,
     packages=find_packages(),
     install_requires=['selenium'],
+    extras_require={
+        "dev": ["pytest>=7.0", "twine>=4.0.2"],
+    },
     keywords=['python', 'web scrapping', 'scrap'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
