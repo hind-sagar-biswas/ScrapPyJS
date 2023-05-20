@@ -1,12 +1,12 @@
-# Scrappy Class
+# ScrapPyJS Class
 
-The `Scrappy` class provides functionality for web scraping using Selenium.
+The `ScrapPyJS` class provides functionality for web scraping using Selenium were you can Scrap data via running JS script directly from python.
 
 ## Constructor
 
 `__init__(script=None, browser=None, show=False, debug=False, strict=False)`
 
-The constructor initializes a `Scrappy` object with the following parameters:
+The constructor initializes a `ScrapPyJS` object with the following parameters:
 
 - `script` (optional): The JavaScript code to be executed by the web browser.
 - `browser` (optional): An existing instance of a Selenium WebDriver. If not provided, a new instance will be created using Chrome.
@@ -16,17 +16,17 @@ The constructor initializes a `Scrappy` object with the following parameters:
 
 ## Methods
 
-`Scrappy.setup_browser()`
+`ScrapPyJS.setup_browser()`
 
 This method sets up the web browser instance. It creates a new instance of a Chrome WebDriver with the specified options based on the constructor parameters.
 
-`Scrappy.set_script(script)`
+`ScrapPyJS.set_script(script)`
 
 This method sets the JavaScript code to be executed by the web browser.
 
 - `script`: The JavaScript code to be executed.
 
-`Scrappy.scrap(url, wait=False, wait_for=None, wait_target=None, wait_time=10)`
+`ScrapPyJS.scrap(url, wait=False, wait_for=None, wait_target=None, wait_time=10)`
 
 This method performs web scraping on the specified URL.
 
@@ -38,22 +38,22 @@ This method performs web scraping on the specified URL.
 
 Returns the result of executing the JavaScript code on the web page.
 
-`Scrappy.end()`
+`ScrapPyJS.end()`
 
 This method terminates the web browser instance if it exists.
 
 ## How to Use
 
-1. Import the Scrappy:
+1. Import the ScrapPyJS:
 
     ```python
     from ScrapPy import ScrapPy
     ```
 
-2. Create an instance of the Scrappy class:
+2. Create an instance of the ScrapPyJS class:
 
     ```python
-    scrappy = Scrappy()
+    scrappy = ScrapPyJS()
     ```
 
 3. Set JS script as string to return a value from the website

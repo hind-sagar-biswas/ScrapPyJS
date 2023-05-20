@@ -13,7 +13,7 @@ LONG_DESCRIPTION = 'A package that allows to scrapp data from Web pages by runni
 
 # Setting up
 setup(
-    name="ScrapPy",
+    name="ScrapPyJS",
     version=VERSION,
     author="Hind Sagar Biswas",
     author_email="<hindsbhk@gmail.com>",

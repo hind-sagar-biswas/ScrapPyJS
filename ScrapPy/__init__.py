@@ -1,1 +1,0 @@
-from ScrapPy.scrappy import ScrapPy

@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class ScrapPy():
+class ScrapPyJS():
     def __init__(self, script=None, browser=None, show=False, debug=False, strict=False):
         """
         Initializes a ScrapPy object.

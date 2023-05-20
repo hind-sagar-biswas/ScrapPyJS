@@ -1,0 +1,1 @@
+from ScrapPyJS.scrappy import ScrapPyJS
