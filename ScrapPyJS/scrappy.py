@@ -1,6 +1,7 @@
 import json
 import logging
 import datetime
+from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -27,11 +28,10 @@ class ScrapPyJS():
 
         self.save = False
         self.save_file = "scrape-result-$t"
-        self.save_file_format = "txt"
+        self.save_file_format = "json"
         self.save_file_location = "./"
 
         if self.debug: logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
         if self.browser is None: self.setup_browser()
 
     def setup_browser(self) -> None:
@@ -96,6 +96,19 @@ class ScrapPyJS():
             logging.error("Failed to write to File")
 
         return return_val
+    
+    def get_by_value(self, wait_for):
+        # Mapping wait_for value to corresponding Selenium By method
+        match wait_for:
+            case 'class': return By.CLASS_NAME
+            case 'id': return By.ID
+            case 'name': return By.NAME
+            case 'tag': return By.TAG_NAME
+            case 'link': return By.LINK_TEXT
+            case 'part_link': return By.PARTIAL_LINK_TEXT
+            case 'css': return By.CSS_SELECTOR
+            case 'xp': return By.XPATH
+            case _: return None
 
     def scrap(self, url, wait=False, wait_for=None, wait_target=None, wait_time=10):
         """
@@ -111,28 +124,8 @@ class ScrapPyJS():
         Returns:
         - result: The result of executing the JavaScript code on the web page.
         """
+        wait_for = self.get_by_value(wait_for)
         if wait_for is None or wait_target is None: wait = False
-        else:
-            # Mapping wait_for value to corresponding Selenium By method
-            match wait_for:
-                case 'class':
-                    wait_for = By.CLASS_NAME
-                case 'id':
-                    wait_for = By.ID
-                case 'name':
-                    wait_for = By.NAME
-                case 'tag':
-                    wait_for = By.TAG_NAME
-                case 'link':
-                    wait_for = By.LINK_TEXT
-                case 'part_link':
-                    wait_for = By.PARTIAL_LINK_TEXT
-                case 'css':
-                    wait_for = By.CSS_SELECTOR
-                case 'xp':
-                    wait_for = By.XPATH
-                case _:
-                    wait = False
 
         self.browser.get(url)
 
@@ -160,9 +153,18 @@ class ScrapPyJS():
             logging.error("Expected url_list = list() for ScrapPyJS.loop_through()")
             return False
         results = []
-        for url in url_list:
-            result = self.scrap(self, url, wait, wait_for, wait_target, wait_time)
+
+        # store the save mode and set save mode to False
+        save = self.save
+        self.set_save_info(save=False)
+
+        for url in tqdm(url_list):
+            result = self.scrap(url, wait, wait_for, wait_target, wait_time)
             results.append(result)
+
+        # reset the save mode 
+        self.set_save_info(save=save)
+
         return self.save_to_file(results) if self.save else results
 
     def end(self) -> None:
@@ -170,5 +172,5 @@ class ScrapPyJS():
         if self.browser is not None: self.browser.quit()
 
     def __str__(self) -> str:
-        return f"ScrapPyJS -> show: {self.show}; debug: {self.debug}; save: {self.save}"
+        return "ScrapPyJS Object"
     
