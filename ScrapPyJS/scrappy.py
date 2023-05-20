@@ -23,6 +23,11 @@ class ScrapPyJS():
         self.strict = strict
         self.browser = browser
 
+        self.save = False
+        self.save_file = "result-$url-$t"
+        self.save_file_format = "txt"
+        self.save_file_location = "./"
+
         if self.debug: logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
         if self.browser is None: self.setup_browser()
@@ -42,6 +47,15 @@ class ScrapPyJS():
             chrome_options.add_argument("--log-level=3")
             chrome_options.add_argument("--silent")
         self.browser = webdriver.Chrome(options=chrome_options)
+
+    def toggle_save_mode(self):
+        self.save = not self.save
+
+    def set_save_info(self, save=False, file_name="result-$url-$t", file_format="txt", location="./"):
+        self.save = save
+        self.save_file = file_name
+        self.save_file_format = file_format
+        self.save_file_location = location
 
     def set_script(self, script):
         """
