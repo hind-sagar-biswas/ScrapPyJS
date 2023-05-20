@@ -4,7 +4,7 @@ The `Scrappy` class provides functionality for web scraping using Selenium.
 
 ## Constructor
 
-`__init__(self, script=None, browser=None, show=False, debug=False, strict=False)`
+`__init__(script=None, browser=None, show=False, debug=False, strict=False)`
 
 The constructor initializes a `Scrappy` object with the following parameters:
 
@@ -16,17 +16,17 @@ The constructor initializes a `Scrappy` object with the following parameters:
 
 ## Methods
 
-### `setup_browser(self)`
+`Scrappy.setup_browser()`
 
 This method sets up the web browser instance. It creates a new instance of a Chrome WebDriver with the specified options based on the constructor parameters.
 
-### `set_script(self, script)`
+`Scrappy.set_script(script)`
 
 This method sets the JavaScript code to be executed by the web browser.
 
 - `script`: The JavaScript code to be executed.
 
-### `scrap(self, url, wait=False, wait_for=None, wait_target=None, wait_time=10)`
+`Scrappy.scrap(url, wait=False, wait_for=None, wait_target=None, wait_time=10)`
 
 This method performs web scraping on the specified URL.
 
@@ -38,7 +38,7 @@ This method performs web scraping on the specified URL.
 
 Returns the result of executing the JavaScript code on the web page.
 
-### `end(self)`
+`Scrappy.end()`
 
 This method terminates the web browser instance if it exists.
 
