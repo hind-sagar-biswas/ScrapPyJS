@@ -4,10 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class Scrappy():
+class ScrapPy():
     def __init__(self, script=None, browser=None, show=False, debug=False, strict=False):
         """
-        Initializes a Scrappy object.
+        Initializes a ScrapPy object.
 
         Parameters:
         - script (str): The JavaScript code to be executed by the web browser.

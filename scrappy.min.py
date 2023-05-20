@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait as I
 from selenium.webdriver.support import expected_conditions as J
 D=False
 C=None
-class Scrappy():
+class ScrapPy():
 	def __init__(A,script=C,browser=C,show=D,debug=D,strict=D):
 		A.js=script;A.show=show;A.debug=debug;A.strict=strict;A.browser=browser
 		if A.browser is C:A.setup_browser()

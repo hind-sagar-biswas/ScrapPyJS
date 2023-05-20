@@ -44,14 +44,10 @@ This method terminates the web browser instance if it exists.
 
 ## How to Use
 
-1. Import the necessary modules:
+1. Import the Scrappy:
 
     ```python
-    from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
+    from scrappy import ScrapPy
     ```
 
 2. Create an instance of the Scrappy class:
@@ -60,19 +56,25 @@ This method terminates the web browser instance if it exists.
     scrappy = Scrappy()
     ```
 
-3. Use the scrap method to scrape a webpage:
+3. Set JS script as string to return a value from the website
+
+    ```python
+    scrappy.set_script("return 'ScrapPy scrapping!'")
+    ```
+
+4. Use the scrap method to scrape a webpage:
 
     ```python
     result = scrappy.scrap(url, wait=True, wait_for='id', wait_target='elementId')
     ```
 
-4. Retrieve the result of the scraping operation:
+5. Retrieve the result of the scraping operation:
 
     ```python
     print(result)
     ```
 
-5. Terminate the web browser instance when finished:
+6. Terminate the web browser instance when finished:
 
     ```python
     scrappy.end()
