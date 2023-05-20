@@ -4,7 +4,7 @@ The `Scrappy` class provides functionality for web scraping using Selenium.
 
 ## Constructor
 
-### `__init__(self, script=None, browser=None, show=False, debug=False, strict=False)`
+`__init__(self, script=None, browser=None, show=False, debug=False, strict=False)`
 
 The constructor initializes a `Scrappy` object with the following parameters:
 
