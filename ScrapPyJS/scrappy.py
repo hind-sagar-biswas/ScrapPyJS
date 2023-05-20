@@ -1,4 +1,6 @@
+import json
 import logging
+import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -23,15 +25,19 @@ class ScrapPyJS():
         self.strict = strict
         self.browser = browser
 
+        self.save = False
+        self.save_file = "scrape-result-$t"
+        self.save_file_format = "txt"
+        self.save_file_location = "./"
+
         if self.debug: logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
         if self.browser is None: self.setup_browser()
 
     def setup_browser(self):
-        """
-        Sets up the web browser instance.
-        Creates a new instance of a Chrome WebDriver with the specified options.
-        """
+        # Sets up the web browser instance.
+        # Creates a new instance of a Chrome WebDriver with the specified options.
+        
         chrome_options = Options()
         if not self.show : 
             chrome_options.add_argument("--headless")
@@ -43,6 +49,25 @@ class ScrapPyJS():
             chrome_options.add_argument("--silent")
         self.browser = webdriver.Chrome(options=chrome_options)
 
+    def toggle_save_mode(self):
+        # toggles save mode
+        self.save = not self.save
+
+    def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="json", location="."):
+        """
+        Change save informations.
+
+        Parameters:
+        - save (bool): status for save mode.
+        - file_name (str): file name for the output file [$t => current time as HHmmss format].
+        - file_format (str): file format of the output file.
+        - location (str): location of save mode.
+        """
+        self.save = save
+        self.save_file = file_name
+        self.save_file_format = file_format
+        self.save_file_location = location
+
     def set_script(self, script):
         """
         Sets the JavaScript code to be executed by the web browser.
@@ -51,6 +76,26 @@ class ScrapPyJS():
         - script (str): The JavaScript code to be executed.
         """
         self.js = script
+
+    def save_to_file(self, data):
+        # Saves data to file.
+        if not isinstance(data, str):
+            # Convert non-string data to JSON string
+            data = json.dumps(data)
+
+        current_time = datetime.datetime.now().strftime("%H%M%S")
+        filename = self.save_file.replace("$t", current_time)
+        file_path = f"{self.save_file_location}/{filename}.{self.save_file_format}"
+
+        return_val = data
+
+        try:
+            with open(file_path, 'w', encoding='utf-8') as outfile:
+                outfile.write(data)
+        except Exception:
+            logging.error("Failed to write to File")
+
+        return return_val
 
     def scrap(self, url, wait=False, wait_for=None, wait_target=None, wait_time=10):
         """
@@ -88,17 +133,17 @@ class ScrapPyJS():
                     wait_for = By.XPATH
                 case _:
                     wait = False
-        
+
         self.browser.get(url)
 
         if wait:
             wait = WebDriverWait(self.browser, wait_time)
             wait.until(EC.presence_of_element_located((wait_for, wait_target)))
-            
-        try: result = self.browser.execute_script(self.js)
-        except: result = False
 
-        return result
+        try: result = self.browser.execute_script(self.js)
+        except Exception: result = False
+
+        return self.save_to_file(result) if self.save else result
     
     def loop_through(self, url_list, wait=False, wait_for=None, wait_target=None, wait_time=10):
         """
@@ -118,7 +163,7 @@ class ScrapPyJS():
         for url in url_list:
             result = self.scrap(self, url, wait, wait_for, wait_target, wait_time)
             results.append(result)
-        return results
+        return self.save_to_file(results) if self.save else results
 
     def end(self):
         # Terminates the web browser instance if it exists.
