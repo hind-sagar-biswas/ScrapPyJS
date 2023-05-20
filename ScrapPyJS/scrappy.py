@@ -83,6 +83,8 @@ class ScrapPyJS():
                     wait_for = By.CSS_SELECTOR
                 case 'xp':
                     wait_for = By.XPATH
+                case _:
+                    wait = False
         
         self.browser.get(url)
 
@@ -94,6 +96,13 @@ class ScrapPyJS():
         except: result = False
 
         return result
+    
+    def loop_through(self, url_list, wait=False, wait_for=None, wait_target=None, wait_time=10):
+        results = []
+        for url in url_list:
+            result = self.scrap(self, url, wait, wait_for, wait_target, wait_time)
+            results.append(result)
+        return results
 
     def end(self):
         # Terminates the web browser instance if it exists.
