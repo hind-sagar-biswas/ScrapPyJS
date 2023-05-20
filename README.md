@@ -2,6 +2,12 @@
 
 The `ScrapPyJS` class provides functionality for web scraping using Selenium were you can Scrap data via running JS script directly from python.
 
+## Installing
+
+```terminal
+pip install ScrapPyJS
+```
+
 ## Constructor
 
 `__init__(script=None, browser=None, show=False, debug=False, strict=False)`
