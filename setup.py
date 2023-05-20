@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '1.0.0'
+VERSION = '1.0.2'
 DESCRIPTION = 'An easy to use web scrapping library via JS scripts'
 LONG_DESCRIPTION = 'A package that allows to scrapp data from Web pages by running JS scripts from python.'
 
