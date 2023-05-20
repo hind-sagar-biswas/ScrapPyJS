@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class ScrapPyJS():
-    def __init__(self, script=None, browser=None, show=False, debug=False, strict=False):
+    def __init__(self, script=None, browser=None, show=False, debug=False, strict=False) -> None:
         """
         Initializes a ScrapPy object.
 
@@ -34,7 +34,7 @@ class ScrapPyJS():
 
         if self.browser is None: self.setup_browser()
 
-    def setup_browser(self):
+    def setup_browser(self) -> None:
         # Sets up the web browser instance.
         # Creates a new instance of a Chrome WebDriver with the specified options.
         
@@ -53,7 +53,7 @@ class ScrapPyJS():
         # toggles save mode
         self.save = not self.save
 
-    def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="json", location="."):
+    def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="json", location=".") -> None:
         """
         Change save informations.
 
@@ -68,7 +68,7 @@ class ScrapPyJS():
         self.save_file_format = file_format
         self.save_file_location = location
 
-    def set_script(self, script):
+    def set_script(self, script) -> None:
         """
         Sets the JavaScript code to be executed by the web browser.
 
@@ -165,7 +165,10 @@ class ScrapPyJS():
             results.append(result)
         return self.save_to_file(results) if self.save else results
 
-    def end(self):
+    def end(self) -> None:
         # Terminates the web browser instance if it exists.
         if self.browser is not None: self.browser.quit()
+
+    def __str__(self) -> str:
+        return f"ScrapPyJS -> show: {self.show}; debug: {self.debug}; save: {self.save}"
     
