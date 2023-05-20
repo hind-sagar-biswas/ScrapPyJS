@@ -1,4 +1,6 @@
+import json
 import logging
+import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -51,7 +53,7 @@ class ScrapPyJS():
     def toggle_save_mode(self):
         self.save = not self.save
 
-    def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="txt", location="./"):
+    def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="json", location="."):
         self.save = save
         self.save_file = file_name
         self.save_file_format = file_format
@@ -65,6 +67,18 @@ class ScrapPyJS():
         - script (str): The JavaScript code to be executed.
         """
         self.js = script
+
+    def save(self, data):
+        if not isinstance(data, str):
+            # Convert non-string data to JSON string
+            data = json.dumps(data)
+
+        current_time = datetime.datetime.now().strftime("%H%M%S")
+        filename = self.save_file.replace("$t", current_time)
+        file_path = f"{self.save_file_location}/{filename}.{self.save_file_format}"
+
+        with open(file_path, 'w', encoding='utf-8') as outfile:
+            outfile.write(data)
 
     def scrap(self, url, wait=False, wait_for=None, wait_target=None, wait_time=10):
         """
