@@ -35,10 +35,9 @@ class ScrapPyJS():
         if self.browser is None: self.setup_browser()
 
     def setup_browser(self):
-        """
-        Sets up the web browser instance.
-        Creates a new instance of a Chrome WebDriver with the specified options.
-        """
+        # Sets up the web browser instance.
+        # Creates a new instance of a Chrome WebDriver with the specified options.
+        
         chrome_options = Options()
         if not self.show : 
             chrome_options.add_argument("--headless")
@@ -51,9 +50,19 @@ class ScrapPyJS():
         self.browser = webdriver.Chrome(options=chrome_options)
 
     def toggle_save_mode(self):
+        # toggles save mode
         self.save = not self.save
 
     def set_save_info(self, save=False, file_name="scrape-result-$t", file_format="json", location="."):
+        """
+        Change save informations.
+
+        Parameters:
+        - save (bool): status for save mode.
+        - file_name (str): file name for the output file [$t => current time as HHmmss format].
+        - file_format (str): file format of the output file.
+        - location (str): location of save mode.
+        """
         self.save = save
         self.save_file = file_name
         self.save_file_format = file_format
@@ -69,6 +78,7 @@ class ScrapPyJS():
         self.js = script
 
     def save_to_file(self, data):
+        # Saves data to file.
         if not isinstance(data, str):
             # Convert non-string data to JSON string
             data = json.dumps(data)
@@ -77,15 +87,13 @@ class ScrapPyJS():
         filename = self.save_file.replace("$t", current_time)
         file_path = f"{self.save_file_location}/{filename}.{self.save_file_format}"
 
-        return_val = True
+        return_val = data
 
         try:
             with open(file_path, 'w', encoding='utf-8') as outfile:
                 outfile.write(data)
         except Exception:
             logging.error("Failed to write to File")
-            logging.info("Returning data instead")
-            return_val = data
 
         return return_val
 
