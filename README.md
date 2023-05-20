@@ -116,7 +116,7 @@ The necessary informations on the ScrapPyJS class is available in `.\CLASS_STRUC
 
 ## License
 
-This code has been licensed under `GNU AGPLv3` open source copyleft license.
+This code has been licensed under `MIT` open source copyleft license.
 
 ## Author
 
