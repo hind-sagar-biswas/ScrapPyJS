@@ -1,3 +1,4 @@
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -21,6 +22,8 @@ class ScrapPyJS():
         self.debug = debug
         self.strict = strict
         self.browser = browser
+
+        if self.debug: logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
         if self.browser is None: self.setup_browser()
 
@@ -98,6 +101,9 @@ class ScrapPyJS():
         return result
     
     def loop_through(self, url_list, wait=False, wait_for=None, wait_target=None, wait_time=10):
+        if not isinstance(url_list, list):
+            logging.error("Expected url_list = list() for ScrapPyJS.loop_through()")
+            return False
         results = []
         for url in url_list:
             result = self.scrap(self, url, wait, wait_for, wait_target, wait_time)
