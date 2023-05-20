@@ -1,4 +1,13 @@
-# ScrapPyJS Class
+# ScrapPyJS
+
+![Project Language](https://img.shields.io/static/v1?label=language&message=python&color=blue)
+![Project Type](https://img.shields.io/static/v1?label=type&message=package&color=red)
+[![PyPI project](https://img.shields.io/static/v1?label=PyPI&message=ScrapPyJS&color=blue)](https://pypi.org/project/ScrapPyJS/)
+![Current Version](https://img.shields.io/static/v1?label=current-version&message=v1.0.2&color=lightgrey)
+![Stable Version](https://img.shields.io/static/v1?label=stable-version&message=v1.0.0&color=brightgreen)
+![Maintained](https://img.shields.io/static/v1?label=maintained&message=yes&color=green)
+![Ask Me Anything](https://img.shields.io/static/v1?label=ask-me&message=anything&color=green)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 The `ScrapPyJS` class provides functionality for web scraping using Selenium were you can Scrap data via running JS script directly from python.
 
@@ -8,82 +17,111 @@ The `ScrapPyJS` class provides functionality for web scraping using Selenium wer
 pip install ScrapPyJS
 ```
 
-## Constructor
-
-`__init__(script=None, browser=None, show=False, debug=False, strict=False)`
-
-The constructor initializes a `ScrapPyJS` object with the following parameters:
-
-- `script` (optional): The JavaScript code to be executed by the web browser.
-- `browser` (optional): An existing instance of a Selenium WebDriver. If not provided, a new instance will be created using Chrome.
-- `show` (optional): Boolean value indicating whether to show the browser window. Default is `False`.
-- `debug` (optional): Boolean value indicating whether to enable debug mode. Default is `False`.
-- `strict` (optional): Boolean value indicating whether to enable strict mode. Default is `False`.
-
-## Methods
-
-`ScrapPyJS.setup_browser()`
-
-This method sets up the web browser instance. It creates a new instance of a Chrome WebDriver with the specified options based on the constructor parameters.
-
-`ScrapPyJS.set_script(script)`
-
-This method sets the JavaScript code to be executed by the web browser.
-
-- `script`: The JavaScript code to be executed.
-
-`ScrapPyJS.scrap(url, wait=False, wait_for=None, wait_target=None, wait_time=10)`
-
-This method performs web scraping on the specified URL.
-
-- `url`: The URL to scrape.
-- `wait` (optional): Boolean value indicating whether to wait for an element to be present on the page before scraping. Default is `False`.
-- `wait_for` (optional): The method to use for locating the element to wait for. Possible values are `'class'`, `'id'`, `'name'`, `'tag'`, `'link'`, `'part_link'`, `'css'`, or `'xp'`. Default is `None`.
-- `wait_target` (optional): The target value to locate the element to wait for. Default is `None`.
-- `wait_time` (optional): The maximum time (in seconds) to wait for the element to be present. Default is `10`.
-
-Returns the result of executing the JavaScript code on the web page.
-
-`ScrapPyJS.end()`
-
-This method terminates the web browser instance if it exists.
-
 ## How to Use
 
-1. Import the ScrapPyJS:
+### Including and Initiating
 
-    ```python
-    from ScrapPy import ScrapPy
-    ```
+```python
+from ScrapPyJS import ScrapPyJS
 
-2. Create an instance of the ScrapPyJS class:
+# initiate ScrapPyJS
+scrappy = ScrapPyJS()
 
-    ```python
-    scrappy = ScrapPyJS()
-    ```
+# set js script
+JS_SCRIPT = "return 'ScrapPy scrapping!'"
+scrappy.set_script(JS_SCRIPT)
 
-3. Set JS script as string to return a value from the website
+# rest of the code goes here...
 
-    ```python
-    scrappy.set_script("return 'ScrapPy scrapping!'")
-    ```
+# close ScrapPyJS
+scrappy.end()
+```
 
-4. Use the scrap method to scrape a webpage:
+### Simple way
+
+1. Use the `scrap` method to scrape a webpage:
 
     ```python
     result = scrappy.scrap(url, wait=True, wait_for='id', wait_target='elementId')
     ```
 
-5. Retrieve the result of the scraping operation:
+2. Retrieve the result of the scraping operation:
 
     ```python
     print(result)
     ```
 
-6. Terminate the web browser instance when finished:
+### Loop through list of URLs
+
+1. Set up a list of target URLs
 
     ```python
-    scrappy.end()
+    URLS = [
+        'https://url1.com/',
+        'https://url2.com/homepage/',
+        'https://url2.com/about',
+    ]
+    ```
+
+2. Use the `loop_through` method to scrape through the target webpages webpage:
+
+    ```python
+    # The result value will be a list if save mode is on, else a JSON string
+    result = scrappy.scrap(url, wait=True, wait_for='id', wait_target='elementId')
+    ```
+
+3. Retrieve the result of the scraping operation:
+
+    ```python
+    print(result)
+    ```
+
+### Save results to a file
+
+#### Activate save mode
+
+1. Via toggle:
+
+    ```python
+    scrappy.toggle_save_mode()
+    ```
+
+    Here, the save mode which is set to `False` by Default is toggled to `True`. So the save file informations are default.
+
+2. Via `set_save_info` method:
+
+    ```python
+    scrappy.set_save_info(save=True)
+    ```
+
+    Here, we directly set save mode to `True` leaving other infos to default.
+
+#### Configure save mode
+
+1. Via `set_save_info` method:
+
+    ```python
+    FILE_NAME = "output"
+    FILE_FORMAT = "json"
+    SAVE_LOCATION = "path/to/file/"
+
+    scrappy.toggle_save_mode(save=True, file_name=FILE_NAME, file_format=FILE_FORMAT, location=SAVE_LOCATION)
     ```
 
 Please note that you will need to have the necessary `Selenium` and `WebDriver` dependencies installed to use this code.
+
+## Documentation
+
+The necessary informations on the ScrapPyJS class is available in `.\CLASS_STRUCTURE.md`
+
+## License
+
+This code has been licensed under `GNU AGPLv3` open source copyleft license.
+
+## Author
+
+**NAME:** *Hind Sagar Biswas*
+
+**Website:** [coderaptors.epizy.com](http://coderaptors.epizy.com/)
+
+[![Author Facebook](https://img.shields.io/static/v1?label=facebook&message=hindsagar.biswas&style=social&logo=facebook)](https://m.facebook.com/hindsagar.biswas)

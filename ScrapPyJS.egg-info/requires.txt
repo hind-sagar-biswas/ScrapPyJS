@@ -1,4 +1,5 @@
 selenium
+tqdm
 
 [dev]
 pytest>=7.0
